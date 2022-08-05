@@ -61,7 +61,7 @@ type RecConn struct {
 // CloseAndReconnect will try to reconnect.
 func (rc *RecConn) CloseAndReconnect() {
 	rc.Close()
-	go rc.connect()
+	rc.connect()
 }
 
 // setIsConnected sets state for isConnected
@@ -410,7 +410,6 @@ func (rc *RecConn) keepAlive() {
 
 			<-ticker.C
 			if time.Since(keepAliveResponse.getLastResponse()) > rc.getKeepAliveTimeout() {
-				rc.CloseAndReconnect()
 				return
 			}
 		}
